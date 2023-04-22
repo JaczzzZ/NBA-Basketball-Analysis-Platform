@@ -1,0 +1,160 @@
+{% extends 'players/base.html' %}
+
+{% block body %}
+<style>
+    .margin {
+        height: 20px;
+    }
+    #search-pad {
+        display: flex;
+    }
+    #search-pad > * {
+        margin: 5px;
+    }
+    #search-pad > div > * {
+        width: 100%;
+    }
+    .predict-pad {
+        display: flex;
+    }
+    .predict-pad > div {
+        margin: 5px;
+    }
+    
+</style>
+<div class="margin"></div>
+<h1 class="title">NBA Teams</h1>
+
+<div class="predict-pad">
+    <div>
+        <label>Visit Team</label>
+        <input type="text" id="visit_team">
+    </div>
+    <div>
+        <label>Home Team</label>
+        <input type="text" id="home_team">
+    </div>
+    <div>
+        <label>Predict Model</label>
+        <select id="model">
+            <option value="DT">DT</option>
+            <option value="LogisticRegression">LogisticRegression</option>
+            <option value="RND">RND</option>
+        </select>
+    </div>
+    <button id="predict">Predict</button>
+    <div id="predict_result"></div>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<div style="width: 100%; overflow-x: auto;">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>season</th>
+                <th>lg</th>
+                <th>name</th>
+                <th>abbreviation</th>
+                <th>playoffs</th>
+                <th>G</th>
+                <th>MP</th>
+                <th>FG</th>
+                <th>FGA</th>
+                <th>FG%</th>
+                <th>3P</th>
+                <th>3PA</th>
+                <th>3P%</th>
+                <th>2P</th>
+                <th>2PA</th>
+                <th>2P%</th>
+                <th>FT</th>
+                <th>FTA</th>
+                <th>FT%</th>
+                <th>ORB</th>
+                <th>DRB</th>
+                <th>TRB</th>
+                <th>AST</th>
+                <th>STL</th>
+                <th>BLK</th>
+                <th>TOV</th>
+                <th>PF</th>
+                <th>PTS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in page_obj %}
+            <tr>
+                <td>
+                    <a href="{% url 'teamdelete' pk=player.pk %}">Del</a>
+                    <a href="{% url 'teamedit' pk=player.pk %}">Edit</a>
+                </td>
+                <td>{{ player.season }}</td>
+                <td>{{ player.lg }}</td>
+                <td>{{ player.name }}</td>
+                <td>{{ player.abbreviation }}</td>
+                <td>{{ player.playoffs }}</td>
+                <td>{{ player.g }}</td>
+                <td>{{ player.mp_per_game }}</td>
+                <td>{{ player.fg_per_game }}</td>
+                <td>{{ player.fga_per_game }}</td>
+                <td>{{ player.fg_percent }}</td>
+                <td>{{ player.x3p_per_game }}</td>
+                <td>{{ player.x3pa_per_game }}</td>
+                <td>{{ player.x3p_percent }}</td>
+                <td>{{ player.x2p_per_game }}</td>
+                <td>{{ player.x2pa_per_game }}</td>
+                <td>{{ player.x2p_percent }}</td>
+                <td>{{ player.ft_per_game }}</td>
+                <td>{{ player.fta_per_game }}</td>
+                <td>{{ player.ft_percent }}</td>
+                <td>{{ player.orb_per_game }}</td>
+                <td>{{ player.drb_per_game }}</td>
+                <td>{{ player.trb_per_game }}</td>
+                <td>{{ player.ast_per_game }}</td>
+                <td>{{ player.stl_per_game }}</td>
+                <td>{{ player.blk_per_game }}</td>
+                <td>{{ player.tov_per_game }}</td>
+                <td>{{ player.pf_per_game }}</td>
+                <td>{{ player.pts_per_game }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    $ = jQuery;
+    $("#predict").click(() => {
+        const visit_team = $("#visit_team").val();
+        const home_team = $("#home_team").val();
+        const model = $("#model").val();
+        $.post("./", {
+            visit_team,
+            home_team,
+            model
+        },
+        (data) => {
+            if (data.error)
+                $("#predict_result").html(data.error);
+            else
+                $("#predict_result").html(`<b>${visit_team}</b> Probability of winning: <b>${data.visit_win}</b><br><b>${home_team}</b> probability of winning: <b>${data.home_win}</b><br><b>${data.win_team}</b> will win!`);
+        });
+    });
+</script>
+{% endblock %}

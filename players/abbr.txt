@@ -1,0 +1,76 @@
+clustering的那个文件就是二维的代码，只需要改一下，增加对不同等级的球员打一下标签，然后在网页上展示这个功能
+
+
+seas_id - 赛季ID
+season - 赛季
+player_id -球员ID
+player - 球员
+pos - 球员位置
+age - 年龄
+experience - 已效力赛季
+lg - 联盟
+tm - 队伍
+G - Games（单赛季打的比赛）
+GS - Games Started（首发出场的比赛）
+MP（mp_per_game） - Minutes Played Per Game（每场比赛出场时长）
+FG（fg_per_game） - Field Goals Per Game（场均总命中球数）
+FGA（fga_per_game） - Field Goal Attempts Per Game（场均命中球倾向）
+FG%（fg_percent） - Field Goal Percentage（场均总命中率）
+3P（x3p_per_game） - 3-Point Field Goals Per Game（场均三分命中数）
+3PA（x3pa_per_game） - 3-Point Field Goal Attempts Per Game（场均三分命中倾向）
+3P%（x3p_percent） - 3-Point Field Goal Percentage（场均三分命中率)
+2P（x2p_per_game） - 2-Point Field Goals Per Game（场均两分命中数）
+2PA（x2pa_per_game） - 2-Point Field Goal Attempts Per Game（场均两分命中倾向）
+2P%（x2p_percent） - 2-Point Field Goal Percentage（场均两分命中率）
+eFG%（e_fg_percent） - Effective Feild Goal Percentage（真实命中率）
+FT（ft_per_game） - Free Throws Per Game（场均罚球命中数）
+FTA（fta_per_game） - Free Throws Attempts Per Game（场均罚球倾向）
+FT%（ft_percent） - Free Throw Percentage（场均罚球命中率）
+ORB（orb_per_game） - Offensive Rebounds Per Game（场均进攻篮板）
+DRB（drb_per_game) - Defensive Rebounds Per Game（场均防守篮板）
+TRB(trb_per_game) - Total Rebounds Per Game（场均总篮板）
+AST(ast_per_game) - Assists Per Game（场均助攻）
+STL(stl_per_game) - Steals Per Game（场均抢断）
+BLK(blk_per_game) - Blocks Per Game（场均盖帽）
+TOV(tov_per_game) - Turnovers Per Game（场均失误）
+PF(pf_per_game) - Personal Fouls Per Game（场均个人犯规）
+PTS(pts_per_game) - Points Per Game（场均得分）
+
+
+PER(per) - Player Efficiency Rating(球员效率评级）
+TS%(ts_percent) - True Shooting Percentage(真实命中率）综合考虑了2分球数据、3分球数据和罚球数据
+3PAr(x3p_ar) - 3-Point Attempt Rate(三分倾向率）三分球占总出手数比例
+FTr(f_tr) - Free Throw Attempt Rate(罚球倾向率）
+ORB%(orb_percent) - Offensive Rebounds Percentage(进攻篮板率）
+DRB%(drb_percent) - Defensive Rebounds Percentage(进攻篮板率）
+TRB%(trb_percent) - Total Rebounds Percentage(总篮板率）
+AST%(ast_percent) - Assists Percentage(助攻率）
+STL%(stl_percent) - Steals Percentage（抢断率）
+BLK%(blk_percent) - Blocks Percentage（盖帽率）
+TOV%(tov_percent) - Turnovers Percentage（失误率）
+USG%(usg_percent) - Usage Percentage(球员使用率）
+OWS - Offensive Win Share（进攻贡献值）
+DWS - Defensive Win Share（防守贡献值）
+WS - Win Share（胜利贡献值）
+WS/48 - Win Share Per 48 Mins（每48分钟胜利贡献值）
+OBPM - Offensive Box Plus/Minus （进攻端正负值）
+DBPM - Defensive Box Plus/Minus （防守端正负值）
+BPM - Box Plus/Minus （正负值）
+VORP - Value over Replacement Player （球员替换价值）球员在球场上起到的作用，与联盟该位置平均水平的球员的差异
+
+SG:后卫
+PG：组织后卫
+SF：小前锋
+PF：大前锋
+C:中锋
+
+1.	后卫：三分型后卫：三分进球数3p，三分命中率3p%
+三分线内终结性后卫：两分进球数2p，两分命中率2p%
+PG: 组织性后卫：投篮出手数，助攻除失误
+   3D后卫：三分命中数3p，高阶防守贡献率
+2.	全能前锋：高阶进攻贡献率ows，高阶防守贡献率dws（在Advance.csv）
+锋位摇摆人偏外线：2分命中数/3分命中数，2p/3p
+锋位摇摆人偏内线：2分命中数/3分命中数，篮板+盖帽 2p/3p   TRB+BLK
+3.	中锋
+蓝领中锋：篮板/得分，盖帽/得分 TRB/PTS BLK/PTS
+空间策应中锋：助攻，三分命中数    AST 3p% 
